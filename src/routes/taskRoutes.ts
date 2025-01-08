@@ -9,11 +9,7 @@ const router: Router = express.Router();
 
 router.post("/create", taskController.createTaskHandler)
 router.delete("/:id", taskController.deleteTaskHandler)
-
 router.patch("/:id", taskController.updateTaskHandler)
-
-
-
 router.get("/", taskController.getTaskListHandler)
 
 

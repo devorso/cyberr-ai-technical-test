@@ -40,10 +40,10 @@ export default {
         const task: Task = {
             description: req.body.description || "No description found",
             title: req.body.title || "No title found",
-            id: req.body.id,
+            id: parseInt(req.params.id),
             status: req.body.status || "pending"
         }
-        if (req.body.status !== "pending" || req.body.status !== "completed") {
+        if (req.body.status !== "pending" && req.body.status !== "completed") {
             return res.status(500).json({ message: "Invalid data!" })
         }
         try {
