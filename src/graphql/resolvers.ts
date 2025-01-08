@@ -1,6 +1,5 @@
 
-import { Task } from "../models/task";
-import { createNewTask, getTaskById, getTaskList, updateTask } from "../controllers/taskController";
+import { createNewTask, deleteTask, getTaskList, Task, updateTask } from "../models/task";
 
 
 export default {
@@ -28,5 +27,8 @@ export default {
             status,
             id
         })
+    },
+    async deleteTask({id}: {id: number}) {
+        return await deleteTask(id)
     }
   }

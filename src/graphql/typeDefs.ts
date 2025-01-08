@@ -17,6 +17,6 @@ status: String!
 
     addTask(title:String!, description: String!, status: String!): Task!
     updateTask(id:ID!,title:String!, description: String!, status: String!): Task!
-    deleteTask(id: ID!): String!
+    deleteTask(id: ID!): Task!
     }
 `

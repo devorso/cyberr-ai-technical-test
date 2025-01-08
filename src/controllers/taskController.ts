@@ -1,50 +1,66 @@
 import { eq } from "drizzle-orm";
 import { getDatabaseConnection } from "../db/config";
 import { tasksTable } from "../db/schema"
-import { Task } from "../models/task";
+import { createNewTask, deleteTask, getTaskList, Task, updateTask } from "../models/task";
+import { Request, Response } from "express";
 
 
-const db = getDatabaseConnection()
-export async function createNewTask(task: Task) {
+export default {
 
-    const { title, description, status } = task;
-    let data = await db.insert(tasksTable).values({
-        title,
-        description,
-        status,
-    }).returning()
+    createTaskHandler: async (req: Request, res: Response) => {
+        // new task
+        try {
+            let result = await createNewTask({
+                title: req.body.title,
+                description: req.body.description,
+                id: 0,
+                status: "pending"
+            })
+            if (result) {
+                return res.status(201).json({ status: "OK" })
+            }
+        } catch (err) {
 
+        }
+        return res.status(503).json({ status: "NOK" })
+    },
+    deleteTaskHandler: async (req: Request, res: Response) => {
+        try {
 
-    return data ? data[0] : {}
-}
+            await deleteTask(+req.params.id)
+            return res.status(201).json({ message: "OK" })
+        }
+        catch (err) {
+            return res.status(503).json({ message: "An error has been occured" })
+        }
+    },
 
+    updateTaskHandler: async (req: Request, res: Response) => {
+        //change status
+        const task: Task = {
+            description: req.body.description || "No description found",
+            title: req.body.title || "No title found",
+            id: req.body.id,
+            status: req.body.status || "pending"
+        }
+        if (req.body.status !== "pending" || req.body.status !== "completed") {
+            return res.status(500).json({ message: "Invalid data!" })
+        }
+        try {
+            await updateTask({
+                description: task.description,
+                id: task.id,
+                status: task.status,
+                title: task.title
+            })
+            return res.status(201).json({ message: "OK" })
+        } catch (err) {
+            return res.status(503).json({ message: "An error has been occured" })
+        }
+    },
 
-export async function updateTask(task: Task) {
-
-    let { title, description, status, id } = task
-    try {
-        let data = await db.update(tasksTable).set({
-            title,
-            description,
-            status
-        }).where(eq(tasksTable.id, id)).returning()
-        return data[0]
-    } catch (err) {
-        return {}
+    getTaskListHandler: async (req: Request, res: Response) => {
+        return res.status(200).json(await getTaskList())
     }
-}
 
-export async function getTaskList() {
-    let data = await db.select().from(tasksTable);
-
-    return data
-
-}
-
-export async function getTaskById(id: number) {
-    return await db.select().from(tasksTable).where(eq(tasksTable.id, +id))[0]
-}
-export async function deleteTask(id: number) {
-
-    return await db.delete(tasksTable).where(eq(tasksTable.id, id))
 }

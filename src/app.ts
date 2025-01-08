@@ -6,10 +6,12 @@ import resolvers from "./graphql/resolvers"
 import typeDefs from "./graphql/typeDefs"
 import graphqlHttp, { graphqlHTTP } from "express-graphql"
 import { buildSchema } from "graphql";
+import cors from "cors";
 
 const app = express()
 
 
+app.use(cors())
 app.use(express.json())
 
 app.use("/task", taskRoutes)
