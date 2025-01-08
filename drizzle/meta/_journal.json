@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1736360347215,
+      "tag": "0000_tan_romulus",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1736360442803,
+      "tag": "0001_majestic_doomsday",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1736360489926,
+      "tag": "0002_unique_supreme_intelligence",
+      "breakpoints": true
+    }
+  ]
+}
