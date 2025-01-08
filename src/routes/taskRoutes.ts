@@ -1,6 +1,5 @@
 import express, { Request, Response, Router } from "express";
 import taskController from "../controllers/taskController"
-import { Task } from "../models/task";
 
 const router: Router = express.Router();
 
