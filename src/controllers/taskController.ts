@@ -1,8 +1,8 @@
 import { eq } from "drizzle-orm";
 import { getDatabaseConnection } from "../db/config";
 import { tasksTable } from "../db/schema"
-import { createNewTask, deleteTask, getTaskList, Task, updateTask } from "../models/task";
-import { Request, Response } from "express";
+import { createNewTask, deleteTask, getTaskList, type Task, updateTask } from "../models/task";
+import type { Request, Response } from "express";
 
 
 export default {

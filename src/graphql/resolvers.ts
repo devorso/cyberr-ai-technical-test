@@ -1,5 +1,5 @@
 
-import { createNewTask, deleteTask, getTaskList, Task, updateTask } from "../models/task";
+import { createNewTask, deleteTask, getTaskList, type Task, updateTask } from "../models/task";
 
 
 export default {

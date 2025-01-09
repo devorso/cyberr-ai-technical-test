@@ -11,3 +11,10 @@ export const tasksTable = sqliteTable("tasks_table", {
   .default(sql`(current_timestamp)`),
 
 });
+
+
+export const usersTable = sqliteTable("users_table", {
+  id: int().primaryKey({autoIncrement: true}),
+  username: text().unique().notNull(),
+  password: text().notNull(),
+})
