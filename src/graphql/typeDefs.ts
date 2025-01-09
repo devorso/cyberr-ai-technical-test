@@ -16,7 +16,7 @@ status: String!
     type Mutation {
 
     
-    addTask(title:String!, description: String!, status: String!): Task!
+    addTask(title:String!, description: String!): Task!
     updateTask(id:ID!,title:String!, description: String!, status: String!): Task!
     deleteTask(id: ID!): Task!
     loginUser(username: String!, password: String!): String!

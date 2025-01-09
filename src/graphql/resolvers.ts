@@ -16,7 +16,7 @@ export default {
     }},
     Mutation: {
      
-    async addTask(parent,{title, description, status}: {title: string; description: string; status: "pending"| "completed"}, context) {
+    async addTask(parent,{title, description}: {title: string; description: string; }, context) {
       
         if (!context.user) {
             throw new Error("Unauthorized")
@@ -26,7 +26,7 @@ export default {
             id:0,
             title,
             description,
-            status
+            status:"pending"
         })
     },
     async updateTask(parent,{id,title,description, status}:  {id:number; title: string; description: string; status: "pending"| "completed"}, context) {
