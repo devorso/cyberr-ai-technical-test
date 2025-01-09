@@ -4,6 +4,7 @@
 - Don't forget to add a file called .env including the content inside:
 ```bash
 DB_FILE_NAME=file:local.db
+TOKEN_SECRET=Secret-for-jwt
 ```
 
 

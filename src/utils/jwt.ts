@@ -20,7 +20,7 @@ export const authenticateToken = (req: Request, res: Response | null, next: Next
     }
 
     return jwt.verify(token!, process.env.TOKEN_SECRET as string, (err: any, user: any) => {
-        console.log(err)
+        
 
         if (err) {
             if (res) {
