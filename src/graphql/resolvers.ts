@@ -1,6 +1,6 @@
 
 import { createNewTask, deleteTask, getTaskList, type Task, updateTask } from "../models/task";
-import { loginUser, loginUserDatabase, registerUser, registerUserDatabase } from "../models/user";
+import { loginUserDatabase, registerUserDatabase } from "../models/user";
 
 
 export default {
