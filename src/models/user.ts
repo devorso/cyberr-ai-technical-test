@@ -9,7 +9,7 @@ export interface User {
     password: string;
 }
 const db = getDatabaseConnection()
-export const loginUser = async(username: string, password: string) => {
+export const loginUserDatabase = async(username: string, password: string) => {
 
     let user = await db.select().from(usersTable).where(eq(usersTable.username,username));
     if (!user) {
@@ -28,10 +28,11 @@ export const loginUser = async(username: string, password: string) => {
         return generateAccessToken(username);
 }
 
-export const registerUser = async (username: string, password: string) => {
+export const registerUserDatabase = async (username: string, password: string) => {
     const hash = await Bun.password.hash(password);
-    return await db.insert(usersTable).values({
+     await db.insert(usersTable).values({
         username,
         password: hash
     }).returning()
+    return "OK"
 }

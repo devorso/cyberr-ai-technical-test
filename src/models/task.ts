@@ -14,10 +14,11 @@ const db = getDatabaseConnection()
 export async function createNewTask(task: Task) {
 
     const { title, description, status } = task;
+    
     let data = await db.insert(tasksTable).values({
         title,
         description,
-        status,
+        status:"pending",
     }).returning()
 
 
@@ -28,6 +29,9 @@ export async function createNewTask(task: Task) {
 export async function updateTask(task: Task) {
 
     let { title, description, status, id } = task
+    if (status !== "pending" && status !== "completed") {
+        throw new Error("Invalid data")
+    }
     try {
         let data = await db.update(tasksTable).set({
             title,

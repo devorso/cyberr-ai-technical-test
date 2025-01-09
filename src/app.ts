@@ -2,7 +2,7 @@ import express from "express";
 import { graphqlHTTP } from "express-graphql"
 import { buildSchema } from "graphql";
 import cors from "cors";
-import {expressjwt as jwt} from "express-jwt"
+import {ApolloServer} from "apollo-server-express"
 import taskRoutes from "./routes/taskRoutes"
 import authRoutes from "./routes/authRoutes"
 import resolvers from "./graphql/resolvers"
@@ -16,27 +16,30 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use("/auth",authRoutes)
-var schema = buildSchema(typeDefs)
-
-app.all(
-    "/graphql",
-    graphqlHTTP({
-        schema: schema,
-        rootValue: resolvers,
-
-        graphiql: true,
-        context: () => authenticateToken(req,null,null)
-        
-    }))
-
-app.use(authenticateToken)
-app.use("/task", taskRoutes)
 
 
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    introspection:true,
+    context: ({req}) => {
+      
+       return {user: authenticateToken(req,null,null)}
+    }
+ 
+  });
+  
+server.start().then((v) => {
+    server.applyMiddleware({ app, path: "/graphql" });
+})
+
+app.use("/task", authenticateToken, taskRoutes)
 
 
 
 
-app.listen(3010, () => {
+
+
+app.listen(3011, () => {
     console.log("API Started")
 })
